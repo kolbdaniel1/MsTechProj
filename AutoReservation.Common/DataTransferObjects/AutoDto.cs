@@ -36,8 +36,8 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
-        private int autoKlasse;
-        public int AutoKlasse
+        private AutoKlasse autoKlasse;
+        public AutoKlasse AutoKlasse
         {
             get { return autoKlasse; }
             set
