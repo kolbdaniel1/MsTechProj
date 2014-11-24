@@ -1,4 +1,83 @@
-﻿using System;using System.Runtime.Serialization;using System.Text;namespace AutoReservation.Common.DataTransferObjects{    [DataContract]    public class AutoDto : DtoBase    {        private int id;        public int Id        {            get { return id; }            set            {                if (id != value)                {                    id = value;                    RaisePropertyChanged();                }            }        }        private string marke;        public string Marke        {            get { return marke; }            set            {                if (marke != value)                {                    marke = value;                    RaisePropertyChanged();                }            }        }        private AutoKlasse autoKlasse;        public AutoKlasse AutoKlasse        {            get { return autoKlasse; }            set            {                if (autoKlasse != value)                {                    autoKlasse = value;                    RaisePropertyChanged();                }            }        }        private int tagesTarif;        public int Tagestarif        {            get { return tagesTarif; }            set            {                if (tagesTarif != value)                {                    tagesTarif = value;                    RaisePropertyChanged();                }            }        }        private int basisTarif;        public int Basistarif        {            get { return basisTarif; }            set            {                if (basisTarif != value)                {                    basisTarif = value;                    RaisePropertyChanged();                }            }        }
+﻿using System;
+using System.Runtime.Serialization;
+using System.Text;
+
+namespace AutoReservation.Common.DataTransferObjects
+{
+    [DataContract]
+    public class AutoDto : DtoBase
+    {
+
+        private int id;
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+        }
+
+        private string marke;
+        public string Marke
+        {
+            get { return marke; }
+            set
+            {
+                if (marke != value)
+                {
+                    marke = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private AutoKlasse autoKlasse;
+        public AutoKlasse AutoKlasse
+        {
+            get { return autoKlasse; }
+            set
+            {
+                if (autoKlasse != value)
+                {
+                    autoKlasse = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int tagesTarif;
+        public int Tagestarif
+        {
+            get { return tagesTarif; }
+            set
+            {
+                if (tagesTarif != value)
+                {
+                    tagesTarif = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int basisTarif;
+        public int Basistarif
+        {
+            get { return basisTarif; }
+            set
+            {
+                if (basisTarif != value)
+                {
+                    basisTarif = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public override string Validate()
         {
@@ -42,4 +121,7 @@
                 Tagestarif,
                 Basistarif,
                 AutoKlasse);
-        }    }}
+        }
+
+    }
+}

@@ -1,4 +1,0 @@
-\\psf\Home\Documents\Visual Studio 2013\Projects\MsTechProj\AutoReservation.Common\bin\Debug\AutoReservation.Common.dll
-\\psf\Home\Documents\Visual Studio 2013\Projects\MsTechProj\AutoReservation.Common\bin\Debug\AutoReservation.Common.pdb
-\\psf\Home\Documents\Visual Studio 2013\Projects\MsTechProj\AutoReservation.Common\obj\Debug\AutoReservation.Common.dll
-\\psf\Home\Documents\Visual Studio 2013\Projects\MsTechProj\AutoReservation.Common\obj\Debug\AutoReservation.Common.pdb
