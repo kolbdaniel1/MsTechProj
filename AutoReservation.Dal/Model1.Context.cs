@@ -25,8 +25,8 @@ namespace AutoReservation.Dal
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Auto> Autoes { get; set; }
-        public virtual DbSet<Kunde> Kundes { get; set; }
-        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Autos> Autos { get; set; }
+        public virtual DbSet<Kunden> Kundens { get; set; }
+        public virtual DbSet<Reservationen> Reservationens { get; set; }
     }
 }
