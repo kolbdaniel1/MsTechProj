@@ -1,4 +1,5 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Service.Wcf;
 using AutoReservation.Dal;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -19,17 +20,21 @@ namespace AutoReservation.BusinessLayer
 
         IEnumerable<AutoDto> LoadAutos()
         {
-
-            List<Auto> autoList = db.Autos;
+            List<Auto> autoList = context.Autos.ToList();
             List<AutoDto> autoDtoList = autoList.ConvertToDtos();
             return autoDtoList;
         }
-        AutoDto LoadAuto(int id); {
-            
-
+        AutoDto LoadAuto(int id) 
+        {
+            Auto auto = context.Autos.Find(id);
+            AutoDto autoDto = auto.ConvertToDto();
+            auto = autoDto.ConvertToEntity();
         }
 
-        void AddAuto(AutoDto auto);
+        void AddAuto(AutoDto auto)
+        {
+            context.Autos.Add(auto.ConvertToEntity);
+        }
 
         void UpdateAuto(AutoDto modified, AutoDto original);
 
