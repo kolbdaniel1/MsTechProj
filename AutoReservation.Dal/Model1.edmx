@@ -154,7 +154,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AutoReservationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Autos">
+        <EntityType Name="Auto">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -164,7 +164,7 @@
           <Property Name="Tagestarif" Type="Int32" Nullable="false" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Auto" FromRole="Auto" ToRole="Reservation" />
         </EntityType>
-        <EntityType Name="Kunden">
+        <EntityType Name="Kunde">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -174,7 +174,7 @@
           <Property Name="Geburtsdatum" Type="DateTime" Nullable="false" Precision="3" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Kunde" FromRole="Kunde" ToRole="Reservation" />
         </EntityType>
-        <EntityType Name="Reservationen">
+        <EntityType Name="Reservation">
           <Key>
             <PropertyRef Name="ReservationNr" />
           </Key>
@@ -187,10 +187,10 @@
           <NavigationProperty Name="Kunde" Relationship="Self.FK_Reservation_Kunde" FromRole="Reservation" ToRole="Kunde" />
         </EntityType>
         <Association Name="FK_Reservation_Auto">
-          <End Role="Auto" Type="AutoReservationModel.Autos" Multiplicity="1">
+          <End Role="Auto" Type="AutoReservationModel.Auto" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Reservation" Type="AutoReservationModel.Reservationen" Multiplicity="*" />
+          <End Role="Reservation" Type="AutoReservationModel.Reservation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Auto">
               <PropertyRef Name="Id" />
@@ -201,10 +201,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reservation_Kunde">
-          <End Role="Kunde" Type="AutoReservationModel.Kunden" Multiplicity="1">
+          <End Role="Kunde" Type="AutoReservationModel.Kunde" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Reservation" Type="AutoReservationModel.Reservationen" Multiplicity="*" />
+          <End Role="Reservation" Type="AutoReservationModel.Reservation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Kunde">
               <PropertyRef Name="Id" />
@@ -215,23 +215,23 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AutoReservationEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Autos" EntityType="AutoReservationModel.Autos" />
-          <EntitySet Name="Kundens" EntityType="AutoReservationModel.Kunden" />
-          <EntitySet Name="Reservationens" EntityType="AutoReservationModel.Reservationen" />
+          <EntitySet Name="Autos" EntityType="AutoReservationModel.Auto" />
+          <EntitySet Name="Kunden" EntityType="AutoReservationModel.Kunde" />
+          <EntitySet Name="Reservationen" EntityType="AutoReservationModel.Reservation" />
           <AssociationSet Name="FK_Reservation_Auto" Association="Self.FK_Reservation_Auto">
             <End Role="Auto" EntitySet="Autos" />
-            <End Role="Reservation" EntitySet="Reservationens" />
+            <End Role="Reservation" EntitySet="Reservationen" />
           </AssociationSet>
           <AssociationSet Name="FK_Reservation_Kunde" Association="Self.FK_Reservation_Kunde">
-            <End Role="Kunde" EntitySet="Kundens" />
-            <End Role="Reservation" EntitySet="Reservationens" />
+            <End Role="Kunde" EntitySet="Kunden" />
+            <End Role="Reservation" EntitySet="Reservationen" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="LuxusklasseAutos" BaseType="AutoReservationModel.Autos" >
+        <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationModel.Auto" >
           <Property Name="Basistarif" Type="Int32" ConcurrencyMode="None" />
         </EntityType>
-        <EntityType Name="MittelklasseAutos" BaseType="AutoReservationModel.Autos" />
-        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Autos" />
+        <EntityType Name="MittelklasseAuto" BaseType="AutoReservationModel.Auto" />
+        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -239,7 +239,7 @@
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="AutoReservationModelStoreContainer" CdmEntityContainer="AutoReservationEntities">
     <EntitySetMapping Name="Autos">
-      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Autos)">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Auto)">
         <MappingFragment StoreEntitySet="Autos">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Marke" ColumnName="Marke" />
@@ -247,13 +247,13 @@
           <ScalarProperty Name="Tagestarif" ColumnName="Tagestarif" />
         </MappingFragment>
       </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.LuxusklasseAutos)">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.LuxusklasseAuto)">
         <MappingFragment StoreEntitySet="Autos_LuxusklasseAutos">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Basistarif" ColumnName="Basistarif" />
         </MappingFragment>
       </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.MittelklasseAutos)">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.MittelklasseAuto)">
         <MappingFragment StoreEntitySet="Autos_MittelklasseAutos">
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -264,8 +264,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Kundens">
-      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Kunden)">
+    <EntitySetMapping Name="Kunden">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Kunde)">
         <MappingFragment StoreEntitySet="Kundens">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Nachname" ColumnName="Nachname" />
@@ -274,8 +274,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Reservationens">
-      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Reservationen)">
+    <EntitySetMapping Name="Reservationen">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Reservation)">
         <MappingFragment StoreEntitySet="Reservationens">
           <ScalarProperty Name="ReservationNr" ColumnName="ReservationNr" />
           <ScalarProperty Name="AutoId" ColumnName="AutoId" />

@@ -64,6 +64,7 @@
     <Compile Include="DataTransferObjects\KundeDto.cs" />
     <Compile Include="DataTransferObjects\ReservationDto.cs" />
     <Compile Include="Interfaces\IAutoReservationService.cs" />
+    <Compile Include="Interfaces\IEnumarable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

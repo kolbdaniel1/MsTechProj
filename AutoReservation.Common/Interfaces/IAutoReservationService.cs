@@ -13,7 +13,7 @@ namespace AutoReservation.Common.Interfaces
 
         void UpdateAuto(AutoDto modified, AutoDto original);
 
-        void deleteAuto(int id);
+        void DeleteAuto(int id);
 
         IEnumarable<KundeDto> LoadKunden();
         KundeDto LoadKunde(int id);
@@ -22,7 +22,7 @@ namespace AutoReservation.Common.Interfaces
 
         void UpdateKunde(KundeDto modified, KundeDto original);
 
-        void deleteKunde(int id);
+        void DeleteKunde(int id);
 
         IEnumarable<ReservationDto> LoadReservationen();
         ReservationDto LoadReservation(int id);
@@ -31,7 +31,7 @@ namespace AutoReservation.Common.Interfaces
 
         void ReservationUpdate(ReservationDto modified, ReservationDto original);
 
-        void deleteReservation(int id);
+        void DeleteReservation(int id);
 
 
 
