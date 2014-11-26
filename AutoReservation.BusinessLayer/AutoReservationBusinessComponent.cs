@@ -28,15 +28,22 @@ namespace AutoReservation.BusinessLayer
         {
             Auto auto = context.Autos.Find(id);
             AutoDto autoDto = auto.ConvertToDto();
-            auto = autoDto.ConvertToEntity();
+            return autoDto;
         }
 
         void AddAuto(AutoDto auto)
         {
-            context.Autos.Add(auto.ConvertToEntity);
+            context.Autos.Add(auto.ConvertToEntity());
         }
 
-        void UpdateAuto(AutoDto modified, AutoDto original);
+        void UpdateAuto(AutoDto modified, AutoDto original)
+        {
+            var originalEntity = original.ConvertToEntity();
+            var modifiedEntity = modified.ConvertToEntity();
+
+            context.Autos.Attach(originalEntity);
+            context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+        }
 
         void DeleteAuto(int id);
 
