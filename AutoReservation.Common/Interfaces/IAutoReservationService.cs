@@ -6,5 +6,36 @@ namespace AutoReservation.Common.Interfaces
 {
     public interface IAutoReservationService
     {
+        IEnumarable<AutoDto> LoadAutos();
+        AutoDto LoadAuto(int id);
+        
+        void AddAuto(AutoDto auto);
+
+        void UpdateAuto(AutoDto modified, AutoDto original);
+
+        void deleteAuto(int id);
+
+        IEnumarable<KundeDto> LoadKunden();
+        KundeDto LoadKunde(int id);
+
+        void AddKunde(KundeDto Kunde);
+
+        void UpdateKunde(KundeDto modified, KundeDto original);
+
+        void deleteKunde(int id);
+
+        IEnumarable<ReservationDto> LoadReservationen();
+        ReservationDto LoadReservation(int id);
+
+        void AddReservation(ReservationDto Reservation);
+
+        void ReservationUpdate(ReservationDto modified, ReservationDto original);
+
+        void deleteReservation(int id);
+
+
+
+
+
     }
 }
