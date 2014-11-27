@@ -38,12 +38,19 @@ namespace AutoReservation.BusinessLayer
         void UpdateAuto(AutoDto modified, AutoDto original)
         {
             using( var context = new AutoReservationEntities()) {
-                var originalEntity = original.ConvertToEntity();
-                var modifiedEntity = modified.ConvertToEntity();
 
-                context.Autos.Attach(originalEntity);
-                context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
-                context.SaveChanges();
+                try {
+                    var originalEntity = original.ConvertToEntity();
+                    var modifiedEntity = modified.ConvertToEntity();
+
+                    context.Autos.Attach(originalEntity);
+                    context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                    context.SaveChanges();
+                 }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    HandleDbConcurrencyException<AutoDto>(context, original);
+                }
             }
         }
 
@@ -90,12 +97,19 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationEntities())
             {
-                var originalEntity = original.ConvertToEntity();
-                var modifiedEntity = modified.ConvertToEntity();
+                try {   
+                    var originalEntity = original.ConvertToEntity();
+                    var modifiedEntity = modified.ConvertToEntity();
 
-                context.Kunden.Attach(originalEntity);
-                context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
-                context.SaveChanges();
+                    context.Kunden.Attach(originalEntity);
+                    context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                    context.SaveChanges();
+
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    HandleDbConcurrencyException<KundeDto>(context, original);
+                }
             }
         }
 
@@ -109,24 +123,63 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        IEnumerable<KundeDto> LoadKunden();
-        KundeDto LoadKunde(int id);
+        IEnumerable<ReservationDto> LoadReservationn()
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                List<Reservation> ReservationList = context.Reservationen.ToList();
+                List<ReservationDto> ReservationDtoList = ReservationList.ConvertToDtos();
+                return ReservationDtoList;
+            }
+        }
+        ReservationDto LoadReservation(int id)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                Reservation Reservation = context.Reservationen.Find(id);
+                ReservationDto ReservationDto = Reservation.ConvertToDto();
+                return ReservationDto;
+            }
+        }
 
-        void AddKunde(KundeDto Kunde);
+        void AddReservation(ReservationDto Reservation)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                context.Reservationen.Add(Reservation.ConvertToEntity());
+                context.SaveChanges();
+            }
+        }
 
-        void UpdateKunde(KundeDto modified, KundeDto original);
+        void UpdateReservation(ReservationDto modified, ReservationDto original)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                try
+                {
+                    var originalEntity = original.ConvertToEntity();
+                    var modifiedEntity = modified.ConvertToEntity();
 
-        void DeleteKunde(int id);
+                    context.Reservationen.Attach(originalEntity);
+                    context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    HandleDbConcurrencyException<ReservationDto>(context, original);
+                }
+            }
+        }
 
-        IEnumerable<ReservationDto> LoadReservationen();
-        ReservationDto LoadReservation(int id);
-
-        void AddReservation(ReservationDto Reservation);
-
-        void ReservationUpdate(ReservationDto modified, ReservationDto original);
-
-        void DeleteReservation(int id);
-
+        void DeleteReservation(int id)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                var Reservation = context.Reservationen.First(c => c.ReservationNr == id);
+                context.Reservationen.Remove(Reservation);
+                context.SaveChanges();
+            }
+        }
 
         private static void HandleDbConcurrencyException<T>(AutoReservationEntities context, T original) where T : class
         {
