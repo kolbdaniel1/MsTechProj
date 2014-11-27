@@ -47,7 +47,7 @@ namespace AutoReservation.BusinessLayer
                     context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
                     context.SaveChanges();
                  }
-                catch (DbUpdateConcurrencyException ex)
+                catch (DbUpdateConcurrencyException)
                 {
                     HandleDbConcurrencyException<AutoDto>(context, original);
                 }
@@ -106,7 +106,7 @@ namespace AutoReservation.BusinessLayer
                     context.SaveChanges();
 
                 }
-                catch (DbUpdateConcurrencyException ex)
+                catch (DbUpdateConcurrencyException)
                 {
                     HandleDbConcurrencyException<KundeDto>(context, original);
                 }
@@ -164,7 +164,7 @@ namespace AutoReservation.BusinessLayer
                     context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
                     context.SaveChanges();
                 }
-                catch (DbUpdateConcurrencyException ex)
+                catch (DbUpdateConcurrencyException)
                 {
                     HandleDbConcurrencyException<ReservationDto>(context, original);
                 }
