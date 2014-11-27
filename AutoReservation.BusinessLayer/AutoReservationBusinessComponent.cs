@@ -20,29 +20,37 @@ namespace AutoReservation.BusinessLayer
 
         IEnumerable<AutoDto> LoadAutos()
         {
-            List<Auto> autoList = context.Autos.ToList();
-            List<AutoDto> autoDtoList = autoList.ConvertToDtos();
-            return autoDtoList;
+            using( var context = new AutoReservationEntities) {
+                List<Auto> autoList = context.Autos.ToList();
+                List<AutoDto> autoDtoList = autoList.ConvertToDtos();
+                return autoDtoList;
+            }
         }
-        AutoDto LoadAuto(int id) 
+        AutoDto LoadAuto(int id)
         {
-            Auto auto = context.Autos.Find(id);
-            AutoDto autoDto = auto.ConvertToDto();
-            return autoDto;
+            using( var context = new AutoReservationEntities) {
+                Auto auto = context.Autos.Find(id);
+                AutoDto autoDto = auto.ConvertToDto();
+                return autoDto;
+            }
         }
 
         void AddAuto(AutoDto auto)
         {
-            context.Autos.Add(auto.ConvertToEntity());
+            using( var context = new AutoReservationEntities) {
+                context.Autos.Add(auto.ConvertToEntity());
+            }
         }
 
         void UpdateAuto(AutoDto modified, AutoDto original)
         {
-            var originalEntity = original.ConvertToEntity();
-            var modifiedEntity = modified.ConvertToEntity();
+            using( var context = new AutoReservationEntities) {
+                var originalEntity = original.ConvertToEntity();
+                var modifiedEntity = modified.ConvertToEntity();
 
-            context.Autos.Attach(originalEntity);
-            context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                context.Autos.Attach(originalEntity);
+                context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+            }
         }
 
         void DeleteAuto(int id);
