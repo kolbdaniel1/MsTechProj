@@ -1,5 +1,4 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
-using AutoReservation.Service.Wcf;
 using AutoReservation.Dal;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,51 +9,46 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
-        IEnumerable<AutoDto> LoadAutos()
+        public IEnumerable<Auto> LoadAutos()
         {
             using( var context = new AutoReservationEntities()) {
                 List<Auto> autoList = context.Autos.ToList();
-                List<AutoDto> autoDtoList = autoList.ConvertToDtos();
-                return autoDtoList;
+                return autoList;
             }
         }
-        AutoDto LoadAuto(int id)
+        public Auto LoadAuto(int id)
         {
             using( var context = new AutoReservationEntities()) {
                 Auto auto = context.Autos.Find(id);
-                AutoDto autoDto = auto.ConvertToDto();
-                return autoDto;
+                return auto;
             }
         }
 
-        void AddAuto(AutoDto auto)
+        public void AddAuto(Auto auto)
         {
             using( var context = new AutoReservationEntities()) {
-                context.Autos.Add(auto.ConvertToEntity());
+                context.Autos.Add(auto);
                 context.SaveChanges();
             }
         }
 
-        void UpdateAuto(AutoDto modified, AutoDto original)
+        public void UpdateAuto(Auto modified, Auto original)
         {
             using( var context = new AutoReservationEntities()) {
 
                 try {
-                    var originalEntity = original.ConvertToEntity();
-                    var modifiedEntity = modified.ConvertToEntity();
-
-                    context.Autos.Attach(originalEntity);
-                    context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                    context.Autos.Attach(original);
+                    context.Entry(original).CurrentValues.SetValues(modified);
                     context.SaveChanges();
                  }
                 catch (DbUpdateConcurrencyException)
                 {
-                    HandleDbConcurrencyException<AutoDto>(context, original);
+                    HandleDbConcurrencyException<Auto>(context, original);
                 }
             }
         }
 
-        void DeleteAuto(int id)
+        public void DeleteAuto(int id)
         {
             using (var context = new AutoReservationEntities())
             {
@@ -65,55 +59,50 @@ namespace AutoReservation.BusinessLayer
         }
 
 
-        IEnumerable<KundeDto> LoadKunden()
+        public IEnumerable<Kunde> LoadKunden()
         {
             using (var context = new AutoReservationEntities())
             {
                 List<Kunde> KundeList = context.Kunden.ToList();
-                List<KundeDto> KundeDtoList = KundeList.ConvertToDtos();
-                return KundeDtoList;
+                return KundeList;
             }
         }
-        KundeDto LoadKunde(int id)
+        public Kunde LoadKunde(int id)
         {
             using (var context = new AutoReservationEntities())
             {
-                Kunde Kunde = context.Kunden.Find(id);
-                KundeDto kundeDto = Kunde.ConvertToDto();
-                return kundeDto;
+                Kunde kunde = context.Kunden.Find(id);
+                return kunde;
             }
         }
 
-        void AddKunde(KundeDto Kunde)
+        public void AddKunde(Kunde kunde)
         {
             using (var context = new AutoReservationEntities())
             {
-                context.Kunden.Add(Kunde.ConvertToEntity());
+                context.Kunden.Add(kunde);
                 context.SaveChanges();
             }
         }
 
-        void UpdateKunde(KundeDto modified, KundeDto original)
+        public void UpdateKunde(Kunde modified, Kunde original)
         {
             using (var context = new AutoReservationEntities())
             {
                 try {   
-                    var originalEntity = original.ConvertToEntity();
-                    var modifiedEntity = modified.ConvertToEntity();
-
-                    context.Kunden.Attach(originalEntity);
-                    context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                    context.Kunden.Attach(original);
+                    context.Entry(original).CurrentValues.SetValues(modified);
                     context.SaveChanges();
 
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    HandleDbConcurrencyException<KundeDto>(context, original);
+                    HandleDbConcurrencyException<Kunde>(context, original);
                 }
             }
         }
 
-        void DeleteKunde(int id)
+        public void DeleteKunde(int id)
         {
             using (var context = new AutoReservationEntities())
             {
@@ -123,55 +112,50 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        IEnumerable<ReservationDto> LoadReservationn()
+        public IEnumerable<Reservation> LoadReservationen()
         {
             using (var context = new AutoReservationEntities())
             {
                 List<Reservation> ReservationList = context.Reservationen.ToList();
-                List<ReservationDto> ReservationDtoList = ReservationList.ConvertToDtos();
-                return ReservationDtoList;
+                return ReservationList;
             }
         }
-        ReservationDto LoadReservation(int id)
+        public Reservation LoadReservation(int id)
         {
             using (var context = new AutoReservationEntities())
             {
-                Reservation Reservation = context.Reservationen.Find(id);
-                ReservationDto ReservationDto = Reservation.ConvertToDto();
-                return ReservationDto;
+                Reservation reservation = context.Reservationen.Find(id);
+                return reservation;
             }
         }
 
-        void AddReservation(ReservationDto Reservation)
+        public void AddReservation(Reservation reservation)
         {
             using (var context = new AutoReservationEntities())
             {
-                context.Reservationen.Add(Reservation.ConvertToEntity());
+                context.Reservationen.Add(reservation);
                 context.SaveChanges();
             }
         }
 
-        void UpdateReservation(ReservationDto modified, ReservationDto original)
+        public void UpdateReservation(Reservation modified, Reservation original)
         {
             using (var context = new AutoReservationEntities())
             {
                 try
                 {
-                    var originalEntity = original.ConvertToEntity();
-                    var modifiedEntity = modified.ConvertToEntity();
-
-                    context.Reservationen.Attach(originalEntity);
-                    context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                    context.Reservationen.Attach(original);
+                    context.Entry(original).CurrentValues.SetValues(modified);
                     context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    HandleDbConcurrencyException<ReservationDto>(context, original);
+                    HandleDbConcurrencyException<Reservation>(context, original);
                 }
             }
         }
 
-        void DeleteReservation(int id)
+        public void DeleteReservation(int id)
         {
             using (var context = new AutoReservationEntities())
             {

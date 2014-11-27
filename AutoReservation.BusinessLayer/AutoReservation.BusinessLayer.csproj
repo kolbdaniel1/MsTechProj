@@ -81,10 +81,6 @@
       <Project>{AB98AC63-032F-4050-9755-1E2235E9F1DD}</Project>
       <Name>AutoReservation.Dal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoReservation.Service.Wcf\AutoReservation.Service.Wcf.csproj">
-      <Project>{73f6e950-15a9-460d-993b-dfe469a9e286}</Project>
-      <Name>AutoReservation.Service.Wcf</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
