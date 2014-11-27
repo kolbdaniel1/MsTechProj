@@ -45,7 +45,14 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        void DeleteAuto(int id);
+        void DeleteAuto(int id)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                var auto = context.Autos.First(c => c.Id == id);
+                context.Autos.Remove(auto);
+            }
+        }
 
         IEnumerable<KundeDto> LoadKunden();
         KundeDto LoadKunde(int id);
