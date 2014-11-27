@@ -31,6 +31,7 @@ namespace AutoReservation.BusinessLayer
         {
             using( var context = new AutoReservationEntities()) {
                 context.Autos.Add(auto.ConvertToEntity());
+                context.SaveChanges();
             }
         }
 
@@ -42,6 +43,7 @@ namespace AutoReservation.BusinessLayer
 
                 context.Autos.Attach(originalEntity);
                 context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                context.SaveChanges();
             }
         }
 
@@ -51,6 +53,59 @@ namespace AutoReservation.BusinessLayer
             {
                 var auto = context.Autos.First(c => c.Id == id);
                 context.Autos.Remove(auto);
+                context.SaveChanges();
+            }
+        }
+
+
+        IEnumerable<KundeDto> LoadKunden()
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                List<Kunde> KundeList = context.Kunden.ToList();
+                List<KundeDto> KundeDtoList = KundeList.ConvertToDtos();
+                return KundeDtoList;
+            }
+        }
+        KundeDto LoadKunde(int id)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                Kunde Kunde = context.Kunden.Find(id);
+                KundeDto kundeDto = Kunde.ConvertToDto();
+                return kundeDto;
+            }
+        }
+
+        void AddKunde(KundeDto Kunde)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                context.Kunden.Add(Kunde.ConvertToEntity());
+                context.SaveChanges();
+            }
+        }
+
+        void UpdateKunde(KundeDto modified, KundeDto original)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                var originalEntity = original.ConvertToEntity();
+                var modifiedEntity = modified.ConvertToEntity();
+
+                context.Kunden.Attach(originalEntity);
+                context.Entry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+                context.SaveChanges();
+            }
+        }
+
+        void DeleteKunde(int id)
+        {
+            using (var context = new AutoReservationEntities())
+            {
+                var Kunde = context.Kunden.First(c => c.Id == id);
+                context.Kunden.Remove(Kunde);
+                context.SaveChanges();
             }
         }
 
