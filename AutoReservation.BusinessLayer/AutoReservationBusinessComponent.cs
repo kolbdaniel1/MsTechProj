@@ -10,17 +10,9 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
-
-        private AutoReservationEntities context;
-
-        public AutoReservationBusinessComponent(AutoReservationEntities context)
-        {
-            this.context = context;
-        }
-
         IEnumerable<AutoDto> LoadAutos()
         {
-            using( var context = new AutoReservationEntities) {
+            using( var context = new AutoReservationEntities()) {
                 List<Auto> autoList = context.Autos.ToList();
                 List<AutoDto> autoDtoList = autoList.ConvertToDtos();
                 return autoDtoList;
@@ -28,7 +20,7 @@ namespace AutoReservation.BusinessLayer
         }
         AutoDto LoadAuto(int id)
         {
-            using( var context = new AutoReservationEntities) {
+            using( var context = new AutoReservationEntities()) {
                 Auto auto = context.Autos.Find(id);
                 AutoDto autoDto = auto.ConvertToDto();
                 return autoDto;
@@ -37,14 +29,14 @@ namespace AutoReservation.BusinessLayer
 
         void AddAuto(AutoDto auto)
         {
-            using( var context = new AutoReservationEntities) {
+            using( var context = new AutoReservationEntities()) {
                 context.Autos.Add(auto.ConvertToEntity());
             }
         }
 
         void UpdateAuto(AutoDto modified, AutoDto original)
         {
-            using( var context = new AutoReservationEntities) {
+            using( var context = new AutoReservationEntities()) {
                 var originalEntity = original.ConvertToEntity();
                 var modifiedEntity = modified.ConvertToEntity();
 
