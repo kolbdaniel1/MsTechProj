@@ -10,7 +10,7 @@ namespace AutoReservation.Service.Wcf
 {
     public class AutoReservationService : IAutoReservationService
     {
-        AutoReservationBusinessComponent businessComponent;
+        AutoReservationBusinessComponent businessComponent = new AutoReservationBusinessComponent();
 
         private static void WriteActualMethod()
         {

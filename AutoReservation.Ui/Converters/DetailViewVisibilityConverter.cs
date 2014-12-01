@@ -17,7 +17,13 @@ namespace AutoReservation.Ui.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value == null)
+            {
+                return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+
+
         }
     }
 }

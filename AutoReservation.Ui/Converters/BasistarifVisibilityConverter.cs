@@ -18,7 +18,13 @@ namespace AutoReservation.Ui.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if ((AutoKlasse)value == AutoKlasse.Luxusklasse)
+            {
+                return Visibility.Collapsed;
+            }
+            return Visibility.Visible;
+
+
         }
     }
 }

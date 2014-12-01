@@ -12,7 +12,7 @@ namespace AutoReservation.Service.Wcf.Testing
     public abstract class ServiceTestBase
     {
         protected abstract IAutoReservationService Target { get; }
-
+        AutoReservationService service = new AutoReservationService();
         [TestInitialize]
         public void InitializeTestData()
         {
@@ -40,13 +40,16 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void GetAutoByIdTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+
+            AutoDto auto = service.LoadAuto(3);
+            Assert.IsNotNull(auto);
         }
 
         [TestMethod]
         public void GetKundeByIdTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto kunde = service.LoadKunde(3);
+            Assert.IsNotNull(kunde);
         }
 
         [TestMethod]
