@@ -21,9 +21,6 @@
             <TabItem Header="Kunden">
                 <Views:KundeView x:Name="kvKundenView"/>
             </TabItem>
-            <TabItem Header="Reservationen">
-                <Views:KundeView x:Name="rvReservationenView"/>
-            </TabItem>
         </TabControl>
     </Grid>
 </Window>

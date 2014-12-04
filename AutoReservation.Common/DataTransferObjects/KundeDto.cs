@@ -22,42 +22,45 @@ namespace AutoReservation.Common.DataTransferObjects
 
         }
 
+        private String nachname;
         public String Nachname
         {
-            get { return Nachname; }
+            get { return nachname; }
             set
             {
-                if (Nachname != value)
+                if (nachname != value)
                 {
-                    Nachname = value;
+                    nachname = value;
                     RaisePropertyChanged();
                 }
             }
 
         }
 
+        private String vorname;
         public String Vorname
         {
-            get { return Vorname; }
+            get { return vorname; }
             set
             {
-                if (Vorname != value)
+                if (vorname != value)
                 {
-                    Vorname = value;
+                    vorname = value;
                     RaisePropertyChanged();
                 }
             }
 
         }
 
+        private DateTime geburtsdatum;
         public DateTime Geburtsdatum
         {
-            get { return Geburtsdatum; }
+            get { return geburtsdatum; }
             set
             {
-                if (Geburtsdatum != DateTime.MinValue)
+                if (geburtsdatum != DateTime.MinValue)
                 {
-                    Geburtsdatum = value;
+                    geburtsdatum = value;
                     RaisePropertyChanged();
                 }
             }
