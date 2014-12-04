@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-
+using AutoReservation.Service.Wcf;
 namespace AutoReservation.Service.Wcf.Host
 {
     public class Program
