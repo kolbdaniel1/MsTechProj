@@ -30,6 +30,25 @@ namespace AutoReservation.BusinessLayer.Testing
             TestEnvironmentHelper.InitializeTestData();
         }
         
+
+
+
+        [TestMethod]
+        public void ConcurrencyExceptionTest()
+        {
+            AutoDto autoOld = Target.LoadAuto(1).ConvertToDto();
+            AutoDto autoDtoCopy = (AutoDto)autoOld.Clone();
+
+            autoDtoCopy.Marke = "Königsegg";
+            autoDtoCopy.AutoKlasse = AutoKlasse.Luxusklasse;
+
+
+
+            target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
+            
+        }
+
+
         [TestMethod]
         public void UpdateAutoTest()
         {
@@ -39,27 +58,27 @@ namespace AutoReservation.BusinessLayer.Testing
             autoDtoCopy.Marke = "Königsegg";
             autoDtoCopy.AutoKlasse = AutoKlasse.Luxusklasse;
 
-
+            
 
             target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
-            Assert.AreEqual(autoDtoCopy.Marke, Target.LoadAuto(autoOld.Id).Marke);
+            Assert.AreEqual(autoDtoCopy.Marke, Target.LoadAuto(1).ConvertToDto().Marke);
+            Assert.AreEqual(autoDtoCopy.AutoKlasse, AutoKlasse.Luxusklasse);
             
         }
 
         [TestMethod]
         public void UpdateKundeTest()
         {
-            //Kunde kundeNew = new Kunde();
-            //Dal.Kunde kundeOld = target.LoadKunde(1);
+            KundeDto kundeOld = Target.LoadKunde(1).ConvertToDto();
+            KundeDto kundeDtoCopy = (KundeDto)kundeOld.Clone();
 
-            //kundeNew.Vorname = "testKundenVorname";
-            //kundeNew.Nachname = "testKundenNachname";
-            //kundeNew.Id = kundeOld.Id;
-            //kundeNew.Geburtsdatum = kundeOld.Geburtsdatum;
-            //kundeNew.Reservations = kundeOld.Reservations;
+            kundeDtoCopy.Nachname = "Bolika";
             
-            //target.UpdateKunde(kundeOld, kundeNew);
-            //Assert.AreNotEqual(kundeNew, kundeOld);
+
+
+            target.UpdateKunde(kundeDtoCopy.ConvertToEntity(), kundeOld.ConvertToEntity());
+            //Assert.AreEqual(kundeDtoCopy.Nachname, "Bolika");
+            
         }
 
         [TestMethod]
