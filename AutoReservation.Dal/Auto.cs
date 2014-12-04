@@ -12,18 +12,17 @@ namespace AutoReservation.Dal
     using System;
     using System.Collections.Generic;
     
-    public partial class Auto
+    public abstract partial class Auto
     {
         public Auto()
         {
-            this.Reservations = new HashSet<Reservation>();
+            this.Reservation = new HashSet<Reservation>();
         }
     
         public int Id { get; set; }
         public string Marke { get; set; }
-        public int AutoKlasse { get; set; }
         public int Tagestarif { get; set; }
     
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
     }
 }

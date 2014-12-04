@@ -16,7 +16,7 @@ namespace AutoReservation.Dal
     {
         public Kunde()
         {
-            this.Reservations = new HashSet<Reservation>();
+            this.Reservation = new HashSet<Reservation>();
         }
     
         public int Id { get; set; }
@@ -24,6 +24,6 @@ namespace AutoReservation.Dal
         public string Vorname { get; set; }
         public System.DateTime Geburtsdatum { get; set; }
     
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
     }
 }
