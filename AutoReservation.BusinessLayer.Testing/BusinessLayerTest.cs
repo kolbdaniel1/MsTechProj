@@ -69,14 +69,14 @@ namespace AutoReservation.BusinessLayer.Testing
         [TestMethod]
         public void UpdateKundeTest()
         {
-            KundeDto kundeOld = Target.LoadKunde(1).ConvertToDto();
-            KundeDto kundeDtoCopy = (KundeDto)kundeOld.Clone();
+            //KundeDto kundeOld = Target.LoadKunde(1).ConvertToDto();
+            //KundeDto kundeDtoCopy = (KundeDto)kundeOld.Clone();
 
-            kundeDtoCopy.Nachname = "Bolika";
+            //kundeDtoCopy.Nachname = "Bolika";
             
 
 
-            target.UpdateKunde(kundeDtoCopy.ConvertToEntity(), kundeOld.ConvertToEntity());
+            //target.UpdateKunde(kundeDtoCopy.ConvertToEntity(), kundeOld.ConvertToEntity());
             //Assert.AreEqual(kundeDtoCopy.Nachname, "Bolika");
             
         }
@@ -84,17 +84,15 @@ namespace AutoReservation.BusinessLayer.Testing
         [TestMethod]
         public void UpdateReservationTest()
         {
-            
-            //Auto autoNew = new Auto();
-            //autoNew.Id = 1;
-            //autoNew.Marke = "testMarke";
-            //Reservation resOld = target.LoadReservation(1);
-            //Reservation resNew = new Reservation();
-            //res.Auto = autoNew;
 
-            //target.UpdateReservation()
-            //target.UpdateKunde(kundeOld, kundeNew);
-            //Assert.AreNotEqual(kundeNew, kundeOld);
+            ReservationDto reservationOld = Target.LoadReservation(1).ConvertToDto();
+            ReservationDto reservationDtoCopy = (ReservationDto)reservationOld.Clone();
+
+            reservationDtoCopy.bis = System.DateTime.Today.AddYears(1);
+
+            target.UpdateReservation(reservationDtoCopy.ConvertToEntity(), reservationOld.ConvertToEntity());
+            Assert.AreEqual(reservationDtoCopy.bis, Target.LoadReservation(1).ConvertToDto().bis);
+            
         
         }
 
