@@ -24,21 +24,9 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
-        public List<KundeDto> Kunden
-        {
-            get
-            {
-                return Service.LoadKunden().ToList();
-            }
-        }
+        public ObservableCollection<KundeDto> Kunden { get; set; }
 
-        public List<AutoDto> Autos
-        {
-            get
-            {
-                return Service.LoadAutos().ToList();
-            }
-        }
+        public ObservableCollection<AutoDto> Autos { get; set; }
 
         private ReservationDto selectedReservation;
         public ReservationDto SelectedReservation
@@ -83,6 +71,9 @@ namespace AutoReservation.Ui.ViewModels
                 reservationOriginal.Add((ReservationDto)reservation.Clone());
             }
             selectedReservation = Reservations.FirstOrDefault();
+     
+            Kunden = new ObservableCollection<KundeDto>(Service.LoadKunden());
+            Autos = new ObservableCollection<AutoDto>(Service.LoadAutos());
         }
 
         private bool CanLoad()
