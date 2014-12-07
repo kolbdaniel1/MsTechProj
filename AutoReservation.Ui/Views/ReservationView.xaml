@@ -33,12 +33,14 @@
             <DataGrid Grid.Row="1"
                       Name="dgReservation" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                       SelectionMode="Single" IsReadOnly="True"
-                      ItemsSource="{Binding Kunden}" 
-                      SelectedItem="{Binding SelectedKunde, Mode=TwoWay}">
+                      ItemsSource="{Binding Reservationen}" 
+                      SelectedItem="{Binding SelectedReservation, Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nachname" Binding="{Binding Nachname}" />
-                    <DataGridTextColumn Header="Vorname" Binding="{Binding Vorname}" />
-                    <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Geburtsdatum, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Bis" Binding="{Binding Bis, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Automarke" Binding="{Binding Auto.Marke}" />
+                    <DataGridTextColumn Header="Kunde Name" Binding="{Binding Kunden.Nachname}" />
+                    <DataGridTextColumn Header="Kunde Vorname" Binding="{Binding Kunden.Vorname}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
@@ -60,7 +62,7 @@
             </ScrollViewer>
         </StackPanel>
          <!--Details--> 
-        <Grid Grid.Column="3" Visibility="{Binding SelectedKunde, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
+        <Grid Grid.Column="3" Visibility="{Binding SelectedReservation, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="150" />
@@ -73,16 +75,22 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="1">Nachname</Label>
-            <Label Grid.Row="2">Vorname</Label>
-            <Label Grid.Row="3">Geburtsdatum</Label>
+            <Label Grid.Row="1">Von</Label>
+            <Label Grid.Row="2">Bis</Label>
+            <Label Grid.Row="3">Automarke</Label>
+            <Label Grid.Row="4">Kunde Vorname</Label>
+            <Label Grid.Row="5">Kunde Nachname</Label>
 
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
                    FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
-                Kunde Editieren
+                Reservation Editieren
             </Label>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedKunde.Nachname}" />
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedKunde.Vorname}" />
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedReservation.Von}" />
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedReservation.Bis}" />
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedReservation.Auto.Marke}" />
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedReservation.Kunde.Vorname}" />
+            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding SelectedReservation.Kunde.Nachname}" />
+            
             <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding SelectedKunde.Geburtsdatum}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
         </Grid>
     </Grid>
