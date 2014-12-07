@@ -157,7 +157,9 @@ namespace AutoReservation.Ui.ViewModels
 
         private void New()
         {
-            Reservations.Add(new ReservationDto { Von = DateTime.Today, Bis = DateTime.Today });
+            Reservations.Add(new ReservationDto { Von = DateTime.Today, 
+                Bis = DateTime.Today,
+            });
         }
 
         private bool CanNew()

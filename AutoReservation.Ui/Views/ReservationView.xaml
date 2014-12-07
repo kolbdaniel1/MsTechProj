@@ -33,7 +33,7 @@
             <DataGrid Grid.Row="1"
                       Name="dgReservation" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
                       SelectionMode="Single" IsReadOnly="True"
-                      ItemsSource="{Binding Reservationen}" 
+                      ItemsSource="{Binding Reservations}" 
                       SelectedItem="{Binding SelectedReservation, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
@@ -85,13 +85,11 @@
                    FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
                 Reservation Editieren
             </Label>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedReservation.Von}" />
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedReservation.Bis}" />
+            <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding SelectedKunde.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+            <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedKunde.Bis}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedReservation.Auto.Marke}" />
             <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedReservation.Kunde.Vorname}" />
             <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding SelectedReservation.Kunde.Nachname}" />
-            
-            <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding SelectedKunde.Geburtsdatum}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
         </Grid>
     </Grid>
 </UserControl>
