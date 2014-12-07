@@ -24,6 +24,22 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
+        public List<KundeDto> Kunden
+        {
+            get
+            {
+                return Service.LoadKunden().ToList();
+            }
+        }
+
+        public List<AutoDto> Autos
+        {
+            get
+            {
+                return Service.LoadAutos().ToList();
+            }
+        }
+
         private ReservationDto selectedReservation;
         public ReservationDto SelectedReservation
         {

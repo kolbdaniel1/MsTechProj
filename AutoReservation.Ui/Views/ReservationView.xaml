@@ -39,8 +39,8 @@
                     <DataGridTextColumn Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
                     <DataGridTextColumn Header="Bis" Binding="{Binding Bis, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
                     <DataGridTextColumn Header="Automarke" Binding="{Binding Auto.Marke}" />
-                    <DataGridTextColumn Header="Kunde Name" Binding="{Binding Kunden.Nachname}" />
-                    <DataGridTextColumn Header="Kunde Vorname" Binding="{Binding Kunden.Vorname}" />
+                    <DataGridTextColumn Header="Kunde Name" Binding="{Binding Kunde.Nachname}" />
+                    <DataGridTextColumn Header="Kunde Vorname" Binding="{Binding Kunde.Vorname}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
@@ -63,7 +63,7 @@
         </StackPanel>
          <!--Details--> 
         <Grid Grid.Column="3" Visibility="{Binding SelectedReservation, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
-            <Grid.ColumnDefinitions>
+          <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
@@ -72,24 +72,24 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Label Grid.Row="1">Von</Label>
             <Label Grid.Row="2">Bis</Label>
-            <Label Grid.Row="3">Automarke</Label>
-            <Label Grid.Row="4">Kunde Vorname</Label>
-            <Label Grid.Row="5">Kunde Nachname</Label>
+            <Label Grid.Row="3">Auto</Label>
+            <Label Grid.Row="4">Kunde</Label>
+     
 
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
                    FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
                 Reservation Editieren
             </Label>
-            <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding SelectedKunde.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
-            <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedKunde.Bis}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
-            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedReservation.Auto.Marke}" />
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedReservation.Kunde.Vorname}" />
-            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding SelectedReservation.Kunde.Nachname}" />
+            <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding SelectedReservation.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+            <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedReservation.Bis}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+            <ComboBox  Grid.Column="1" Grid.Row="3"  ItemsSource="{Binding Autos}" SelectedItem="{Binding SelectedReservation.Auto}" DisplayMemberPath="Marke"/>
+            <ComboBox  Grid.Column="1" Grid.Row="4"  ItemsSource="{Binding Kunden}" SelectedItem="{Binding SelectedReservation.Kunde}" DisplayMemberPath="Nachname"/>
+        
         </Grid>
     </Grid>
 </UserControl>
