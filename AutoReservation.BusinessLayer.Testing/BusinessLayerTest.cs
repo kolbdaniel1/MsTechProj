@@ -44,7 +44,7 @@ namespace AutoReservation.BusinessLayer.Testing
 
 
 
-            target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
+            Target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
             
         }
 
@@ -60,7 +60,7 @@ namespace AutoReservation.BusinessLayer.Testing
 
             
 
-            target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
+            Target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
             Assert.AreEqual(autoDtoCopy.Marke, Target.LoadAuto(1).ConvertToDto().Marke);
             Assert.AreEqual(autoDtoCopy.AutoKlasse, AutoKlasse.Luxusklasse);
             

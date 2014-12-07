@@ -4,7 +4,7 @@
     xmlns:Converters="clr-namespace:AutoReservation.Ui.Converters"
     xmlns:ViewModels="clr-namespace:AutoReservation.Ui.ViewModels">
     <UserControl.DataContext>
-        <ViewModels:ReservationViewModel />
+        <ViewModels:ReservationViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
         <Converters:DetailViewVisibilityConverter x:Key="DetailViewVisibilityConverter" />

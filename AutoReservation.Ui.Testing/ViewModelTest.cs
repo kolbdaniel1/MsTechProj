@@ -29,7 +29,8 @@ namespace AutoReservation.Ui.Testing
         [TestMethod]
         public void ReservationenLoadTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            var viewModel = new ReservationViewModel();
+           
         }
     }
 }

@@ -124,7 +124,11 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationEntities())
             {
-                Reservation reservation = context.Reservationen.Find(id);
+                Reservation reservation = context.Reservationen
+                    .Include(r => r.Auto)
+                    .Include(r => r.Kunde)
+                    .Where(r => r.ReservationNr == id).FirstOrDefault();
+                    
                 return reservation;
             }
         }
