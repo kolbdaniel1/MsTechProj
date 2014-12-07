@@ -181,7 +181,7 @@ namespace AutoReservation.Ui.ViewModels
                         param => CanDelete()
                     );
                 }
-                return DeleteCommand;
+                return deleteCommand;
             }
         }
 

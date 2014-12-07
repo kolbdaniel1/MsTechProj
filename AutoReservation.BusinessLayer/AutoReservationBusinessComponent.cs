@@ -89,11 +89,12 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationEntities())
             {
-                try {   
+
+                try
+                {
                     context.Kunden.Attach(original);
                     context.Entry(original).CurrentValues.SetValues(modified);
                     context.SaveChanges();
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,7 +117,10 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationEntities())
             {
-                List<Reservation> ReservationList = context.Reservationen.ToList();
+                List<Reservation> ReservationList = context.Reservationen
+                    .Include(r => r.Auto)
+                    .Include(r => r.Kunde)
+                    .ToList();
                 return ReservationList;
             }
         }
