@@ -69,6 +69,8 @@ namespace AutoReservation.BusinessLayer.Testing
         [TestMethod]
         public void UpdateKundeTest()
         {
+            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+
             //KundeDto kundeOld = Target.LoadKunde(1).ConvertToDto();
             //KundeDto kundeDtoCopy = (KundeDto)kundeOld.Clone();
 

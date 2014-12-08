@@ -22,7 +22,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void AutosTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+
         }
 
         [TestMethod]
