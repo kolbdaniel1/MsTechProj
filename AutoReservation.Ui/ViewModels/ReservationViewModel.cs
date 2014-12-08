@@ -76,7 +76,7 @@ namespace AutoReservation.Ui.ViewModels
             Autos = new ObservableCollection<AutoDto>(Service.LoadAutos());
         }
 
-        private bool CanLoad()
+        public bool CanLoad()
         {
             return Service != null;
         }
