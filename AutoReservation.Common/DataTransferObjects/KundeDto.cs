@@ -88,6 +88,14 @@ namespace AutoReservation.Common.DataTransferObjects
             return error.ToString();
         }
 
+        public string FullName{
+
+            get {
+                return Vorname + " " + Nachname;
+            }
+        }
+        
+
         public override object Clone()
         {
             return new KundeDto

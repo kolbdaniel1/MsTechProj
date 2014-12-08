@@ -88,7 +88,7 @@
             <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding SelectedReservation.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
             <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedReservation.Bis}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
             <ComboBox  Grid.Column="1" Grid.Row="3"  ItemsSource="{Binding Autos}" SelectedItem="{Binding SelectedReservation.Auto}" DisplayMemberPath="Marke"/>
-            <ComboBox  Grid.Column="1" Grid.Row="4"  ItemsSource="{Binding Kunden}" SelectedItem="{Binding SelectedReservation.Kunde}" DisplayMemberPath="Nachname"/>
+            <ComboBox  Grid.Column="1" Grid.Row="4"  ItemsSource="{Binding Kunden}" SelectedItem="{Binding SelectedReservation.Kunde}" DisplayMemberPath="FullName "/>
         
         </Grid>
     </Grid>
