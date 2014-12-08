@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Linq;
 
 namespace AutoReservation.Service.Wcf.Testing
 {
@@ -22,25 +23,27 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void AutosTest()
         {
-
+            IEnumerable<AutoDto> autos = service.LoadAutos();
+            Assert.IsNotNull(autos);
         }
 
         [TestMethod]
         public void KundenTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            IEnumerable<KundeDto> kunden = service.LoadKunden();
+            Assert.IsNotNull(kunden);
         }
 
         [TestMethod]
         public void ReservationenTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            IEnumerable<ReservationDto> res = service.LoadReservationen();
+            Assert.IsNotNull(res);
         }
 
         [TestMethod]
         public void GetAutoByIdTest()
         {
-
             AutoDto auto = service.LoadAuto(3);
             Assert.IsNotNull(auto);
         }
@@ -69,99 +72,124 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void InsertAutoTest()
         {
-            AutoDto newCar = new AutoDto();
-            newCar.AutoKlasse = AutoKlasse.Standard;
-            newCar.Marke = "Toyota";
-            newCar.Tagestarif = 10;
-            newCar.Id = 99;
-
+            AutoDto newCar = new AutoDto { AutoKlasse = AutoKlasse.Standard, Marke = "Schlitten", Tagestarif = 77};
             service.AddAuto(newCar);
-            Assert.AreEqual(service.LoadAuto(99).Marke, newCar.Marke);
+            Assert.IsTrue(service.LoadAutos().ToList().Contains(newCar));
         }
 
         [TestMethod]
         public void InsertKundeTest()
         {
-            KundeDto kunde = new KundeDto();
-            kunde.Nachname = "Chlaus";
-            kunde.Vorname = "Sami";
-            kunde.Id = 55;
-            kunde.Geburtsdatum = System.DateTime.Today.AddYears(-75);
-
+            KundeDto kunde = new KundeDto { Nachname = "Chlaus", Vorname = "Sami", Geburtsdatum = System.DateTime.Today.AddYears(-75) };
             service.AddKunde(kunde);
-            Assert.IsNotNull(service.LoadKunde(55));
+            Assert.IsTrue(service.LoadKunden().ToList().Contains(kunde));
 
         }
 
         [TestMethod]
         public void InsertReservationTest()
         {
-            ReservationDto res = new ReservationDto();
-            res.Auto = service.LoadAuto(1);
-            res.Kunde = service.LoadKunde(1);
-            
-
+            ReservationDto res = new ReservationDto { Auto = service.LoadAuto(1), Kunde = service.LoadKunde(1) };
             service.AddReservation(res);
+            Assert.IsTrue(service.LoadReservationen().ToList().Contains(res));
         }
 
         [TestMethod]
         public void UpdateAutoTest()
         {
-            KundeDto kunde = service.LoadKunde(1);
-            KundeDto modified = kunde.Clone() as KundeDto;
-            modified.Nachname = "Mustermann";
-
-            service.UpdateKunde(modified, kunde);
-
-            Assert.AreNotEqual(kunde.Nachname, modified.Nachname);
+            AutoDto auto = service.LoadAuto(1);
+            AutoDto modified = auto.Clone() as AutoDto;
+            modified.Marke = "Jaguar";
+            service.UpdateAuto(modified, auto);
+            Assert.AreNotEqual(service.LoadAutos().ToList().Find(auto2 => auto2.Marke == "Jaguar").Marke, auto.Marke);
         }
 
         [TestMethod]
         public void UpdateKundeTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto kunde = service.LoadKunde(1);
+            KundeDto modified = kunde.Clone() as KundeDto;
+            modified.Nachname = "Mustermann";
+            service.UpdateKunde(modified, kunde);
+            Assert.AreNotEqual(service.LoadKunden().ToList().Find(client => client.Nachname == "Mustermann"), kunde.Nachname);
         }
 
         [TestMethod]
         public void UpdateReservationTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            ReservationDto original = service.LoadReservation(1);
+            ReservationDto modified = original.Clone() as ReservationDto;
+            modified.bis = System.DateTime.Today.AddYears(12);
+            service.ReservationUpdate(modified, original);
+            Assert.AreNotEqual(service.LoadReservationen().ToList().Find(res => res.bis == System.DateTime.Today.AddYears(12)).bis, original.bis);
         }
 
+
+
         [TestMethod]
+        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<>), "Concurrency Exception occured")]
         public void UpdateAutoTestWithOptimisticConcurrency()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            AutoDto first = service.LoadAuto(1);
+            AutoDto firstClone = first.Clone() as AutoDto;
+            AutoDto second = service.LoadAuto(1);
+            AutoDto secondClone = second.Clone() as AutoDto;
+            firstClone.Marke = "supercar";
+            secondClone.Marke = "hypercar";
+            service.UpdateAuto(secondClone, second);
+            service.UpdateAuto(firstClone, first);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<>), "Concurrency Exception occured")]
         public void UpdateKundeTestWithOptimisticConcurrency()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto first = service.LoadKunde(1);
+            KundeDto firstClone = first.Clone() as KundeDto;
+            KundeDto second = service.LoadKunde(1);
+            KundeDto secondClone = second.Clone() as KundeDto;
+            firstClone.Nachname = "Müller";
+            secondClone.Nachname = "Meier";
+            service.UpdateKunde(secondClone, second);
+            service.UpdateKunde(firstClone, first);
+
+
         }
 
         [TestMethod]
+        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<>), "Concurrency Exception occured")]
         public void UpdateReservationTestWithOptimisticConcurrency()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            ReservationDto first = service.LoadReservation(1);
+            ReservationDto firstClone = first.Clone() as ReservationDto;
+            ReservationDto second = service.LoadReservation(1);
+            ReservationDto secondClone = second.Clone() as ReservationDto;
+            firstClone.bis = System.DateTime.Today.AddYears(1);
+            secondClone.bis = System.DateTime.Today.AddYears(2);
+            service.ReservationUpdate(secondClone, second);
+            service.ReservationUpdate(firstClone, first);
+
         }
 
         [TestMethod]
         public void DeleteKundeTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            service.DeleteKunde(1);
+            Assert.IsNull(service.LoadKunde(1));
         }
 
         [TestMethod]
         public void DeleteAutoTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            service.DeleteAuto(1);
+            Assert.IsNull(service.LoadAuto(1));
         }
 
         [TestMethod]
         public void DeleteReservationTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            service.DeleteReservation(1);
+            Assert.IsNull(service.LoadReservation(1));
         }
     }
 }
