@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Linq;
+using AutoReservation.Dal;
 
 namespace AutoReservation.Service.Wcf.Testing
 {
@@ -90,9 +91,9 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void InsertReservationTest()
         {
-            ReservationDto res = new ReservationDto { Auto = service.LoadAuto(1), Kunde = service.LoadKunde(1) };
+            ReservationDto res = new ReservationDto { Auto = service.LoadAuto(1), Kunde = service.LoadKunde(1), Bis = DateTime.Today, Von = DateTime.Today };
             service.AddReservation(res);
-            Assert.IsNotNull(service.LoadReservationen().ToList().Find(reserv => reserv.Kunde == res.Kunde));
+            Assert.IsTrue(service.LoadReservationen().ToList().Count == 4);
         }
 
         [TestMethod]
@@ -128,7 +129,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
 
         [TestMethod]
-        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<>), "Concurrency Exception occured")]
+        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<Auto>), "Concurrency Exception occured")]
         public void UpdateAutoTestWithOptimisticConcurrency()
         {
             AutoDto first = service.LoadAuto(1);
@@ -142,7 +143,7 @@ namespace AutoReservation.Service.Wcf.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<>), "Concurrency Exception occured")]
+        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<Kunde>), "Concurrency Exception occured")]
         public void UpdateKundeTestWithOptimisticConcurrency()
         {
             KundeDto first = service.LoadKunde(1);
@@ -158,7 +159,7 @@ namespace AutoReservation.Service.Wcf.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<>), "Concurrency Exception occured")]
+        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<Reservation>))]
         public void UpdateReservationTestWithOptimisticConcurrency()
         {
             ReservationDto first = service.LoadReservation(1);
