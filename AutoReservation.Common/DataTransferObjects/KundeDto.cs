@@ -58,7 +58,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return geburtsdatum; }
             set
             {
-                if (geburtsdatum != DateTime.MinValue)
+                if (geburtsdatum != value)
                 {
                     geburtsdatum = value;
                     RaisePropertyChanged();
@@ -87,6 +87,14 @@ namespace AutoReservation.Common.DataTransferObjects
 
             return error.ToString();
         }
+
+        public string FullName{
+
+            get {
+                return Vorname + " " + Nachname;
+            }
+        }
+        
 
         public override object Clone()
         {

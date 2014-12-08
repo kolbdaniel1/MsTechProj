@@ -31,24 +31,6 @@ namespace AutoReservation.BusinessLayer.Testing
         }
         
 
-
-
-        [TestMethod]
-        public void ConcurrencyExceptionTest()
-        {
-            AutoDto autoOld = Target.LoadAuto(1).ConvertToDto();
-            AutoDto autoDtoCopy = (AutoDto)autoOld.Clone();
-
-            autoDtoCopy.Marke = "Königsegg";
-            autoDtoCopy.AutoKlasse = AutoKlasse.Luxusklasse;
-
-
-
-            target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
-            
-        }
-
-
         [TestMethod]
         public void UpdateAutoTest()
         {
@@ -58,9 +40,7 @@ namespace AutoReservation.BusinessLayer.Testing
             autoDtoCopy.Marke = "Königsegg";
             autoDtoCopy.AutoKlasse = AutoKlasse.Luxusklasse;
 
-            
-
-            target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
+            Target.UpdateAuto(autoDtoCopy.ConvertToEntity(), autoOld.ConvertToEntity());
             Assert.AreEqual(autoDtoCopy.Marke, Target.LoadAuto(1).ConvertToDto().Marke);
             Assert.AreEqual(autoDtoCopy.AutoKlasse, AutoKlasse.Luxusklasse);
             
@@ -69,18 +49,13 @@ namespace AutoReservation.BusinessLayer.Testing
         [TestMethod]
         public void UpdateKundeTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto kundeOld = Target.LoadKunde(1).ConvertToDto();
+            KundeDto kundeDtoCopy = (KundeDto)kundeOld.Clone();
 
-            //KundeDto kundeOld = Target.LoadKunde(1).ConvertToDto();
-            //KundeDto kundeDtoCopy = (KundeDto)kundeOld.Clone();
+            kundeDtoCopy.Nachname = "Bolika";
 
-            //kundeDtoCopy.Nachname = "Bolika";
-            
-
-
-            //target.UpdateKunde(kundeDtoCopy.ConvertToEntity(), kundeOld.ConvertToEntity());
-            //Assert.AreEqual(kundeDtoCopy.Nachname, "Bolika");
-            
+            Target.UpdateKunde(kundeDtoCopy.ConvertToEntity(), kundeOld.ConvertToEntity());
+            Assert.AreEqual(Target.LoadKunde(1).Nachname, "Bolika");            
         }
 
         [TestMethod]
