@@ -55,37 +55,65 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void GetReservationByNrTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            ReservationDto res = service.LoadReservation(1);
+            Assert.IsNotNull(res);
         }
 
         [TestMethod]
         public void GetReservationByIllegalNr()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            ReservationDto res = service.LoadReservation(-1);
+            Assert.IsNull(res);
         }
 
         [TestMethod]
         public void InsertAutoTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            AutoDto newCar = new AutoDto();
+            newCar.AutoKlasse = AutoKlasse.Standard;
+            newCar.Marke = "Toyota";
+            newCar.Tagestarif = 10;
+            newCar.Id = 99;
+
+            service.AddAuto(newCar);
+            Assert.AreEqual(service.LoadAuto(99).Marke, newCar.Marke);
         }
 
         [TestMethod]
         public void InsertKundeTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto kunde = new KundeDto();
+            kunde.Nachname = "Chlaus";
+            kunde.Vorname = "Sami";
+            kunde.Id = 55;
+            kunde.Geburtsdatum = System.DateTime.Today.AddYears(-75);
+
+            service.AddKunde(kunde);
+            Assert.IsNotNull(service.LoadKunde(55));
+
         }
 
         [TestMethod]
         public void InsertReservationTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            ReservationDto res = new ReservationDto();
+            res.Auto = service.LoadAuto(1);
+            res.Kunde = service.LoadKunde(1);
+            
+
+            service.AddReservation(res);
         }
 
         [TestMethod]
         public void UpdateAutoTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto kunde = service.LoadKunde(1);
+            KundeDto modified = kunde.Clone() as KundeDto;
+            modified.Nachname = "Mustermann";
+
+            service.UpdateKunde(modified, kunde);
+
+            Assert.AreNotEqual(kunde.Nachname, modified.Nachname);
         }
 
         [TestMethod]
