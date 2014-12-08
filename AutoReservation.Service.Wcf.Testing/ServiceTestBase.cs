@@ -90,9 +90,9 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void InsertReservationTest()
         {
-            ReservationDto res = new ReservationDto { Auto = service.LoadAuto(1), Kunde = service.LoadKunde(1) };
+            ReservationDto res = new ReservationDto { Auto = service.LoadAuto(1), Kunde = service.LoadKunde(1), Bis = DateTime.Today, Von = DateTime.Today };
             service.AddReservation(res);
-            Assert.IsTrue(service.LoadReservationen().ToList().Contains(res));
+            Assert.IsTrue(service.LoadReservationen().ToList().Count == 4);
         }
 
         [TestMethod]
