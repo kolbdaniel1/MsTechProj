@@ -129,7 +129,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
 
         [TestMethod]
-        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<Auto>), "Concurrency Exception occured")]
+        [ExpectedException(typeof(FaultException<AutoDto>), "Concurrency Exception occured")]
         public void UpdateAutoTestWithOptimisticConcurrency()
         {
             AutoDto first = service.LoadAuto(1);
@@ -143,7 +143,7 @@ namespace AutoReservation.Service.Wcf.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<Kunde>), "Concurrency Exception occured")]
+        [ExpectedException(typeof(FaultException<KundeDto>), "Concurrency Exception occured")]
         public void UpdateKundeTestWithOptimisticConcurrency()
         {
             KundeDto first = service.LoadKunde(1);
@@ -159,7 +159,7 @@ namespace AutoReservation.Service.Wcf.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AutoReservation.BusinessLayer.LocalOptimisticConcurrencyException<Reservation>))]
+        [ExpectedException(typeof(FaultException<ReservationDto>))]
         public void UpdateReservationTestWithOptimisticConcurrency()
         {
             ReservationDto first = service.LoadReservation(1);

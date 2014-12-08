@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using AutoReservation.BusinessLayer;
 using AutoReservation.Dal;
+using System.ServiceModel;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -38,8 +39,21 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateAuto(AutoDto modified, AutoDto original)
         {
+
+            try
+            {
             WriteActualMethod();
             businessComponent.UpdateAuto(modified.ConvertToEntity(), original.ConvertToEntity());
+
+            }
+            catch(LocalOptimisticConcurrencyException<Auto> e)
+            {
+                var exception = new FaultException<AutoDto>(e.MergedEntity.ConvertToDto());
+
+                throw exception; 
+            }
+
+
         }
 
         public void DeleteAuto(int id)
@@ -69,8 +83,18 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateKunde(KundeDto modified, KundeDto original)
         {
+            try {
             WriteActualMethod();
             businessComponent.UpdateKunde(modified.ConvertToEntity(), original.ConvertToEntity());
+
+             }
+            catch(LocalOptimisticConcurrencyException<Kunde> e)
+            {
+                var exception = new FaultException<KundeDto>(e.MergedEntity.ConvertToDto());
+
+                throw exception; 
+            }
+
         }
 
         public void DeleteKunde(int id)
@@ -101,8 +125,18 @@ namespace AutoReservation.Service.Wcf
 
         public void ReservationUpdate(ReservationDto modified, ReservationDto original)
         {
+            try {
             WriteActualMethod();
             businessComponent.UpdateReservation(modified.ConvertToEntity(), original.ConvertToEntity());
+
+             }
+            catch(LocalOptimisticConcurrencyException<Reservation> e)
+            {
+                var exception = new FaultException<ReservationDto>(e.MergedEntity.ConvertToDto());
+ 
+                throw exception; 
+            }
+
         }
 
         public void DeleteReservation(int id)
