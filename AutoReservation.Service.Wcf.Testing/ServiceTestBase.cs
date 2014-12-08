@@ -74,7 +74,8 @@ namespace AutoReservation.Service.Wcf.Testing
         {
             AutoDto newCar = new AutoDto { AutoKlasse = AutoKlasse.Standard, Marke = "Schlitten", Tagestarif = 77};
             service.AddAuto(newCar);
-            Assert.IsTrue(service.LoadAutos().ToList().Contains(newCar));
+            List<AutoDto> mylist = service.LoadAutos().ToList();
+            Assert.IsNotNull(mylist.Find(car => car.Marke == newCar.Marke));
         }
 
         [TestMethod]
@@ -82,7 +83,7 @@ namespace AutoReservation.Service.Wcf.Testing
         {
             KundeDto kunde = new KundeDto { Nachname = "Chlaus", Vorname = "Sami", Geburtsdatum = System.DateTime.Today.AddYears(-75) };
             service.AddKunde(kunde);
-            Assert.IsTrue(service.LoadKunden().ToList().Contains(kunde));
+            Assert.IsNotNull(service.LoadKunden().ToList().Find(client => client.Nachname == kunde.Nachname));
 
         }
 
@@ -91,7 +92,7 @@ namespace AutoReservation.Service.Wcf.Testing
         {
             ReservationDto res = new ReservationDto { Auto = service.LoadAuto(1), Kunde = service.LoadKunde(1) };
             service.AddReservation(res);
-            Assert.IsTrue(service.LoadReservationen().ToList().Contains(res));
+            Assert.IsNotNull(service.LoadReservationen().ToList().Find(reserv => reserv.Kunde == res.Kunde));
         }
 
         [TestMethod]
